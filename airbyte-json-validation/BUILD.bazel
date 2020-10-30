@@ -1,0 +1,10 @@
+java_library(
+    name = "airbyte-json-validation",
+    srcs = glob(["src/main/java/**/*.java"]),
+    deps = [
+        "@maven//:com_google_guava_guava",
+        "//airbyte-commons:airbyte-commons",
+        "//bazel/bundles/jackson:jackson",
+        "//bazel/bundles/jsonschema:jsonschema",
+    ],
+)

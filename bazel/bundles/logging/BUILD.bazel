@@ -1,5 +1,5 @@
 java_library(
-    name = "airbyte-logging",
+    name = "logging",
     exports = [
         "@maven//:org_slf4j_slf4j_api",
         # SLF4J as a facade over Log4j2 required dependencies
