@@ -1,8 +1,0 @@
-java_library(
-    name = "jsonschema",
-    exports = [
-        "@maven//:com_networknt_json_schema_validator",
-        "@maven//:me_andrz_jackson_jackson_json_reference_core",
-    ],
-    visibility = ["//visibility:public"],
-)

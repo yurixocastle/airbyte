@@ -1,4 +1,24 @@
 java_library(
+    name = "jackson",
+    exports = [
+        "@maven//:com_fasterxml_jackson_core_jackson_core",
+        "@maven//:com_fasterxml_jackson_core_jackson_databind",
+        "@maven//:com_fasterxml_jackson_core_jackson_annotations",
+        "@maven//:com_fasterxml_jackson_dataformat_jackson_dataformat_yaml",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+java_library(
+    name = "jsonschema",
+    exports = [
+        "@maven//:com_networknt_json_schema_validator",
+        "@maven//:me_andrz_jackson_jackson_json_reference_core",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+java_library(
     name = "logging",
     exports = [
         "@maven//:org_slf4j_slf4j_api",

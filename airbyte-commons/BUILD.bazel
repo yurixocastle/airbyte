@@ -5,8 +5,8 @@ java_library(
         "@maven//:com_google_guava_guava",
         "@maven//:org_apache_commons_commons_lang3",
         "@maven//:commons_io_commons_io",
-        "//bazel/bundles/logging:logging",
-        "//bazel/bundles/jackson:jackson",
+        "//bazel/bundles:logging",
+        "//bazel/bundles:jackson",
     ],
     visibility = ["//visibility:public"],
 )

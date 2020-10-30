@@ -1,0 +1,4 @@
+java_library(
+    name = "init",
+    resources = glob(["src/main/resources/**/*"]),
+)

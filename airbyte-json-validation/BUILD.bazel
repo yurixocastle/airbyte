@@ -4,7 +4,7 @@ java_library(
     deps = [
         "@maven//:com_google_guava_guava",
         "//airbyte-commons:airbyte-commons",
-        "//bazel/bundles/jackson:jackson",
-        "//bazel/bundles/jsonschema:jsonschema",
+        "//bazel/bundles:jackson",
+        "//bazel/bundles:jsonschema",
     ],
 )
