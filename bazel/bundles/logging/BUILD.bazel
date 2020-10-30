@@ -1,0 +1,15 @@
+java_library(
+    name = "airbyte-logging",
+    exports = [
+        "@maven//:org_slf4j_slf4j_api",
+        # SLF4J as a facade over Log4j2 required dependencies
+        "@maven//:org_apache_logging_log4j_log4j_api",
+        "@maven//:org_apache_logging_log4j_log4j_core",
+        "@maven//:org_apache_logging_log4j_log4j_slf4j_impl",
+        # Bridges from other logging implementations to SLF4J
+        "@maven//:org_slf4j_jul_to_slf4j", # JUL bridge
+        "@maven//:org_slf4j_jcl_over_slf4j", # JCL bridge
+        "@maven//:org_slf4j_log4j_over_slf4j", # log4j1.2 bridge
+    ],
+    visibility = ["//visibility:public"],
+)

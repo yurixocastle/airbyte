@@ -15,3 +15,8 @@ __pycache__
 .venv
 .mypy_cache
 
+# bazel
+bazel-airbyte
+bazel-bin
+bazel-out
+bazel-testlogs
