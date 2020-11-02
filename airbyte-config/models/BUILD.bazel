@@ -1,0 +1,6 @@
+load("//bazel/rules:jsonschema.bzl", "jsonschema_java_gen")
+
+jsonschema_java_gen(
+    name = "models",
+    srcs = glob(["src/main/resources/types/*.yaml"]),
+)
