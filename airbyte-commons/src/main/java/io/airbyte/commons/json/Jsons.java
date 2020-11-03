@@ -31,6 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.function.Function;
 
 public class Jsons {
 

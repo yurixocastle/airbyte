@@ -17,7 +17,7 @@ bazel_skylib_workspace()
 #
 # jsonschema2pojo
 #
-load("//bazel/rules:jsonschema.bzl", "jsonschema2pojo_repositories")
+load("//bazel/rules/jsonschema:defs.bzl", "jsonschema2pojo_repositories")
 jsonschema2pojo_repositories()
 
 #

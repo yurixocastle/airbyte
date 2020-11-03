@@ -13,6 +13,13 @@ def jsonschema2pojo_repositories(version = JSONSCHEMA2POJO_TAG, sha = JSONSCHEMA
         strip_prefix = "jsonschema2pojo-%s" % version,
         sha256 = sha,
         url = "https://github.com/joelittlejohn/jsonschema2pojo/releases/download/jsonschema2pojo-%s/jsonschema2pojo-%s.tar.gz" % (version, version),
+        build_file_content = """
+filegroup(
+    name = "dist",
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"]
+)
+""",
     )
 
 #
@@ -109,8 +116,10 @@ def jsonschema2pojo_repositories(version = JSONSCHEMA2POJO_TAG, sha = JSONSCHEMA
 
 def _impl(ctx):
 #    src_dir = _files(ctx.files.srcs) if ctx.attr.files_not_dirs else _common_dir([f.dirname for f in ctx.files.srcs])
-
     print(ctx.attr._jdk[java_common.JavaRuntimeInfo].java_home)
+    print(ctx.attr._jsonschema2pojo[OutputGroupInfo])
+    print("$(locations " + ctx.attr._jsonschema2pojo + ")")
+    print(ctx.attr._jsonschema2pojo[InstrumentedFilesInfo])
 
     out = ctx.actions.declare_file("echo_result")
     print(out)
@@ -184,11 +193,9 @@ jsonschema_java_gen = rule(
         default = Label("@bazel_tools//tools/jdk:current_java_runtime"),
         providers = [java_common.JavaRuntimeInfo]
       ),
-#      "avro_tools": attr.label(
-#          cfg = "host",
-#          default = AVRO_LIBS_LABELS["tools"],
-#          allow_single_file = True,
-#      )
+      "_jsonschema2pojo": attr.label(
+          default = Label("@jsonschema2pojo//:dist"),
+      )
   },
 #  outputs = {
 #      "codegen": "%{name}_codegen.srcjar",
