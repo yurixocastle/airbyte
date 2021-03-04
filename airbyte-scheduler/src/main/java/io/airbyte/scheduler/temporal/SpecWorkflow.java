@@ -29,6 +29,7 @@ import io.airbyte.commons.io.LineGobbler;
 import io.airbyte.config.IntegrationLauncherConfig;
 import io.airbyte.protocol.models.AirbyteMessage;
 import io.airbyte.protocol.models.ConnectorSpecification;
+import io.airbyte.workers.WorkerConstants;
 import io.airbyte.workers.WorkerUtils;
 import io.airbyte.workers.process.AirbyteIntegrationLauncher;
 import io.airbyte.workers.process.IntegrationLauncher;
@@ -44,11 +45,11 @@ import io.temporal.workflow.WorkflowMethod;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.time.Duration;
-import java.time.Instant;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 @WorkflowInterface
 public interface SpecWorkflow {
@@ -93,12 +94,15 @@ public interface SpecWorkflow {
 
     public ConnectorSpecification run(IntegrationLauncherConfig launcherConfig) {
       try {
-        // todo (cgardens) - we need to find a way to standardize log paths sanely across all workflow.
-        // right now we have this in temporal workflow.
+        // todo (cgardens) - there are 2 sources of truth for job path. we need to reduce this down to one,
+        // once we are fully on temporal.
         final Path jobRoot = workspaceRoot
-            .resolve("spec")
-            .resolve(launcherConfig.getDockerImage().replaceAll("[^A-Za-z0-9]", ""))
-            .resolve(String.valueOf(Instant.now().getEpochSecond()));
+            .resolve(String.valueOf(launcherConfig.getJobId()))
+            .resolve(String.valueOf(launcherConfig.getAttemptId().intValue()));
+
+        MDC.put("job_id", String.valueOf(launcherConfig.getJobId()));
+        MDC.put("job_root", jobRoot.toString());
+        MDC.put("job_log_filename", WorkerConstants.LOG_FILENAME);
 
         final IntegrationLauncher integrationLauncher =
             new AirbyteIntegrationLauncher(launcherConfig.getJobId(), launcherConfig.getAttemptId().intValue(), launcherConfig.getDockerImage(), pbf);
